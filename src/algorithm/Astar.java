@@ -29,7 +29,7 @@ public class Astar {
 
 			int minCost = Integer.MAX_VALUE;
 			Node node = null;
-			for (Point step : movement.STEP) {
+			for (Point step : Movement.STEP) {
 				Point newPos = new Point((currPos.x + step.x), currPos.y + step.y);
 
 				if (movement.isSafe(newPos)) {

@@ -35,14 +35,17 @@ public class Node {
 		this.cost = cost;
 	}
 	
-	public void printData() {
-		System.out.println("Cost : " + this.cost);
-		System.out.println("Board : ");
+	public String printData() {
+		String result = "";
+		result += "Cost : " + this.cost + "\n";
+		result += "Board : \n";
 		for(int i=0; i<MatrixSize.SIZE; i++) {
 			for(int j=0; j<MatrixSize.SIZE; j++) {
-				System.out.print(this.state[i][j] + " ");
+				result += this.state[i][j] + " ";
 			}
-			System.out.println();
+			result += "\n";
 		}
+		
+		return result;
 	}
 }

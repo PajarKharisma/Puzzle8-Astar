@@ -8,9 +8,13 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-
+import algorithm.Astar;
+import algorithm.Solution;
+import node.Node;
 import operation.MatrixSize;
 
 public class MainFrame extends JFrame implements ActionListener{
@@ -18,6 +22,7 @@ public class MainFrame extends JFrame implements ActionListener{
 	JLabel lblInitState, lblGoalState,  lblResult;
 	JTable tblInitState, tblGoalState;
 	JTextArea txtResult;
+	JScrollPane spTxtResult;
 	JButton btnProses;
 
 	private static final long serialVersionUID = 1L;
@@ -65,8 +70,10 @@ public class MainFrame extends JFrame implements ActionListener{
 		
 		txtResult = new JTextArea();
 		txtResult.setSize(420, 420);
-		txtResult.setLocation((this.getWidth() - txtResult.getWidth())/2, 135);
-		add(txtResult);
+		spTxtResult = new JScrollPane(txtResult, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		spTxtResult.setSize(420, 420);
+		spTxtResult.setLocation((this.getWidth() - txtResult.getWidth())/2, 135);
+		add(spTxtResult);
 		
 		btnProses = new JButton("Proses");
 		btnProses.setBounds(
@@ -101,17 +108,52 @@ public class MainFrame extends JFrame implements ActionListener{
 		return jLabel;
 	}
 	
+	private void fix(JTable tbl){
+        tbl.editCellAt(tbl.getRowCount(), tbl.getColumnCount());
+        tbl.setRowSelectionInterval(0, 0);
+        tbl.setEnabled(false);
+    }
+	
+	public static void main(String[] args) {
+		new MainFrame();
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object ob = e.getSource();
 		
 		if(ob.equals(btnProses)) {
-			txtResult.setText("test");
+			int[][] initState = new int[MatrixSize.SIZE][MatrixSize.SIZE];
+			int[][] goalState = new int[MatrixSize.SIZE][MatrixSize.SIZE];
+			
+			fix(tblInitState);
+			fix(tblGoalState);
+			
+			for (int i = 0; i < MatrixSize.SIZE; i++) {
+				for (int j = 0; j < MatrixSize.SIZE; j++) {
+					initState[i][j] = Integer.parseInt(tblInitState.getValueAt(i, j).toString());
+					goalState[i][j] = Integer.parseInt(tblGoalState.getValueAt(i, j).toString());
+				}
+			}
+			
+			Astar astar = new Astar();
+			Solution solution = astar.getSolution(initState, goalState);
+
+			String result = "";
+			if(solution.isSolvable()) {
+				int step = 0;
+				for (Node solutionList : solution.getListOfSolution()) {
+					result += "==================================\n";
+					result += "Step : " + step + "\n";
+					step++;
+					result += solutionList.printData();
+				}
+				txtResult.setText(result);
+				JOptionPane.showMessageDialog(null, "Puzzle Solve");
+			}else {
+				JOptionPane.showMessageDialog(null, "Your puzzle maybe unsolvable");
+			}
 		}
 		
-	}
-	
-	public static void main(String[] args) {
-		new MainFrame();
 	}
 }
