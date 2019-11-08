@@ -23,7 +23,6 @@ public class Astar {
 		Node initNode = new Node(initState, 0);
 		listOfSolution.add(initNode);
 
-		int depth = 0;
 		do {
 			int[][] currentState = matrixOperation.copyOfMatrix(listOfSolution.getLast().getState());
 			Point currPos = movement.getBlankPos(currentState);
@@ -46,13 +45,12 @@ public class Astar {
 			if (node != null) {
 				listOfSolution.add(node);
 				closeList.add(node);
-				depth++;
 			} else {
 				closeList.add(listOfSolution.getLast());
 				listOfSolution.remove(listOfSolution.size()-1);
-				depth--;
 			}
-			if(depth > 10000) {
+			
+			if(listOfSolution.size() > 10000) {
 				solution.setSolvable(false);
 				solution.setListOfSolution(listOfSolution);
 				return solution;
