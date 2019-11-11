@@ -1,7 +1,6 @@
 package costFunction;
 
 import java.awt.Point;
-
 import operation.MatrixSize;
 
 public class CalculateCost {
@@ -40,16 +39,16 @@ public class CalculateCost {
 	
 	public int getBlankDistance(int[][] initState, int[][] goalState) {
 		Point pos = new Point();
-		
-		for(int i=0; i<MatrixSize.SIZE; i++) {
-			for(int j=0; j<MatrixSize.SIZE; j++) {
-				if(initState[i][j] == 0) {
+
+		for (int i = 0; i < MatrixSize.SIZE; i++) {
+			for (int j = 0; j < MatrixSize.SIZE; j++) {
+				if (initState[i][j] == 0) {
 					pos.x = i;
 					pos.y = j;
 				}
 			}
 		}
-		
+
 		return calculateManhattanDistance.getMahattanDistance(goalState, pos, 0);
 	}
 }

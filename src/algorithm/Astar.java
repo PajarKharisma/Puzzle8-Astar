@@ -1,8 +1,8 @@
 package algorithm;
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 
 import costFunction.CalculateCost;
 import node.Node;
@@ -15,16 +15,16 @@ public class Astar {
 		CalculateCost calculateCost = new CalculateCost();
 		Movement movement = new Movement();
 		MatrixOperation matrixOperation = new MatrixOperation();
-		LinkedList<Node> closeList = new LinkedList<>();
+		ArrayList<Node> closeList = new ArrayList<>();
 		Solution solution = new Solution();
 
-		LinkedList<Node> listOfSolution = new LinkedList<>();
+		ArrayList<Node> listOfSolution = new ArrayList<>();
 
 		Node initNode = new Node(initState, 0);
 		listOfSolution.add(initNode);
 
 		do {
-			int[][] currentState = matrixOperation.copyOfMatrix(listOfSolution.getLast().getState());
+			int[][] currentState = matrixOperation.copyOfMatrix(listOfSolution.get(listOfSolution.size()-1).getState());
 			Point currPos = movement.getBlankPos(currentState);
 
 			int minCost = Integer.MAX_VALUE;
@@ -34,7 +34,7 @@ public class Astar {
 
 				if (movement.isSafe(newPos)) {
 					int[][] stateAfterMove = movement.getCurrentState(currentState, currPos, newPos);
-					int cost = calculateCost.getCost(stateAfterMove, goalState) - calculateCost.getTruePos(stateAfterMove, goalState);
+					int cost = calculateCost.getCost(stateAfterMove, goalState) + calculateCost.getCost(initState, stateAfterMove);
 
 					if (cost < minCost && !matrixOperation.checkVisited(stateAfterMove, closeList)) {
 						minCost = cost;
@@ -46,7 +46,7 @@ public class Astar {
 				listOfSolution.add(node);
 				closeList.add(node);
 			} else {
-				closeList.add(listOfSolution.getLast());
+				closeList.add(listOfSolution.get(listOfSolution.size()-1));
 				listOfSolution.remove(listOfSolution.size()-1);
 			}
 			
@@ -55,7 +55,7 @@ public class Astar {
 				solution.setListOfSolution(listOfSolution);
 				return solution;
 			}
-		} while (!Arrays.deepEquals(listOfSolution.getLast().getState(), goalState));
+		} while (!Arrays.deepEquals(listOfSolution.get(listOfSolution.size()-1).getState(), goalState));
 		
 		solution.setSolvable(true);
 		solution.setListOfSolution(listOfSolution);

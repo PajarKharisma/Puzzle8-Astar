@@ -1,18 +1,18 @@
 package algorithm;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 import node.Node;
 
 public class Solution {
-	private LinkedList<Node> listOfSolution;
+	private ArrayList<Node> listOfSolution;
 	private boolean solvable;
 	
-	public LinkedList<Node> getListOfSolution() {
+	public ArrayList<Node> getListOfSolution() {
 		return listOfSolution;
 	}
 	
-	public void setListOfSolution(LinkedList<Node> listOfSolution) {
+	public void setListOfSolution(ArrayList<Node> listOfSolution) {
 		this.listOfSolution = listOfSolution;
 	}
 	

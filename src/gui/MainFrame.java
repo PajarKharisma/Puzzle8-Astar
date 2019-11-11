@@ -18,7 +18,7 @@ import node.Node;
 import operation.MatrixSize;
 
 public class MainFrame extends JFrame implements ActionListener{
-	
+
 	JLabel lblInitState, lblGoalState,  lblResult;
 	JTable tblInitState, tblGoalState;
 	JTextArea txtResult;
@@ -29,7 +29,7 @@ public class MainFrame extends JFrame implements ActionListener{
 
 	public MainFrame() {
 		super("Muhammad Pajar Kharisma Putra");
-		
+
 		setLayout(null);
 		setSize(480, 640);
 		

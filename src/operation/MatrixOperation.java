@@ -1,7 +1,7 @@
 package operation;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import node.Node;
 
 public class MatrixOperation {
@@ -16,7 +16,7 @@ public class MatrixOperation {
 		return result;
 	}
 
-	public boolean checkVisited(int[][] state, LinkedList<Node> solutionList) {
+	public boolean checkVisited(int[][] state, ArrayList<Node> solutionList) {
 		for (Node solution : solutionList) {
 			if (Arrays.deepEquals(state, solution.getState())) {
 				return true;
