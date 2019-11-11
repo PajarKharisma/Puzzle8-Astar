@@ -39,6 +39,8 @@ public class Astar {
 					if (cost < minCost && !matrixOperation.checkVisited(stateAfterMove, closeList)) {
 						minCost = cost;
 						node = new Node(stateAfterMove, cost);
+						node.setGn(calculateCost.getCost(stateAfterMove, goalState));
+						node.setHn(calculateCost.getCost(initState, stateAfterMove));
 					}
 				}
 			}
